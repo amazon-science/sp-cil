@@ -1,0 +1,27 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+# score fusion network (resnet18, split500)
+model:
+    feature_extractor:
+        arch: resnet18_nbr
+        n_branch: TBD
+    classifier:
+        arch: deltaclsn
+        feat_size: 512
+        n_classes: TBD
+        norm: 4
+
+data:
+    loader: BaseDataLoader
+    root_dir: prepro/data/imagenet
+    val: prepro/splits/imagenet/split500/val_${n_novel}-test.csv
+    n_workers: 12
+
+config:
+    n_base_cls: TBD
+    n_novel_cls: 50
+    norm: 4
+
+checkpoint: 
+    model1: null

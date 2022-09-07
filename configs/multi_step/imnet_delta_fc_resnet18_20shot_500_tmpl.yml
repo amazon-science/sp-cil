@@ -1,0 +1,46 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+seed: 1
+model:
+    feature_extractor:
+        arch: resnet18_nbr          # two branches for layer4, the rest is the same
+        pretrained: false
+        n_freeze: 5                 # freeze all layers in resnet
+        n_branch: ${n_novel_plus_1}
+    classifier:
+        arch: deltaclsn
+        feat_size: 512
+        n_classes: ${n_base_cls_3_indents}
+            - 50
+        norm: 4
+data:
+    #loader: BalancedDataLoader  # balanced sampling of base and novel
+    loader: NshotDataLoader      # random sampling of base and novel
+    root_dir: prepro/data/imagenet
+    train: prepro/splits/imagenet/split500/train_${n_novel_times_50}.csv
+    val: prepro/splits/imagenet/split500/val_${n_novel_times_50}-dev.csv
+    n_shot: 20                   # 0 means using all data
+    n_workers: 12
+training:
+    norm: 4
+    n_base_cls: ${n_base_cls_3_indents}
+    n_novel_cls: 50
+    epoch: 5
+    batch_size: 256
+    val_interval: 5
+    save_interval: 5
+    print_interval: 1
+    dp_scaling: no_dp
+    optimizer_main:
+        name: sgd
+        lr: 0.1
+        momentum: 0.9
+        weight_decay: 0.0001
+    scheduler:
+        step_size: 5
+        gamma: 0.1
+    resume:
+        models: ${models_3_indents}
+        param_only: true
+exp: split500/resnet18_nbr_500_fc_50_sp${n_novel}_a{:g}dp{:g}_20shot_s{:d}-dev

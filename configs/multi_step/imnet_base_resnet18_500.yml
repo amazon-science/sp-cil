@@ -1,0 +1,39 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+seed: 1357
+model:
+    feature_extractor:
+        arch: resnet18
+        n_freeze: 0
+        pretrained: false
+    classifier:
+        arch: linearcls
+        feat_size: 512
+        n_class: 500
+        norm: 4
+data:
+    loader: BaseDataLoader
+    root_dir: prepro/data/imagenet
+    train: prepro/splits/imagenet/split500/base_train.csv
+    val: prepro/splits/imagenet/split500/base_val-test.csv
+    n_workers: 12
+training:
+    norm: 4
+    epoch: 90
+    batch_size: 256
+    val_interval: 10
+    save_interval: 10
+    print_interval: 1
+    optimizer_main:
+        name: sgd
+        lr: 0.1
+        momentum: 0.9
+        weight_decay: 0.0001
+    scheduler:
+        step_size: 30
+        gamma: 0.1
+    resume:
+        model: 
+        param_only: true
+exp: resnet18_500_norm4
