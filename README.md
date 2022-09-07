@@ -31,3 +31,10 @@ bash scripts/getresults50050.sh -l fc -n 10
 bash scripts/getresults50050.sh -l fc -n 18
 ```
 
+## Security
+
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
+## License
+
+This project is licensed under the Apache-2.0 License.
