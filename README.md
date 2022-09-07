@@ -15,7 +15,7 @@ To create a conda environment to run the project, simply run
 Create a soft link of the imagenet folder (the root folder that includes train/val image folders) at `prepro/data/imagenet`.
 
 ## Experiments
-### 800-40-40
+### 800-40
 ```shell
 bash scripts/getresults80040.sh -l layer4 -n 10  # for resnet10
 bash scripts/getresults80040.sh -l layer4 -n 18  # for resnet18
